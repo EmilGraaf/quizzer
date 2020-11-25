@@ -1,5 +1,4 @@
-const fetch = require('node-fetch');
-const he = require('he');
+const { getQuestions } = require('../util/questions');
 
 module.exports = {
 	name: 'quiz',
@@ -21,18 +20,6 @@ function execute(message, args) {
 		});
 
 
-}
-
-async function getQuestions(url) {
-
-	const response = await fetch(url);
-	const json = await response.json();
-
-	const singlequote = JSON.stringify(json.results)
-		.replace(/&quot;/g, '\'');
-	const decoded = JSON.parse(he.decode(singlequote));
-
-	return Object.values(decoded);
 }
 
 // {
