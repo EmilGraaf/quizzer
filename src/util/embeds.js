@@ -9,6 +9,17 @@ function embedTfSingle(item) {
 	return embed;
 }
 
+function embedGameInvite(message, opponent) {
+	const embed = new Discord.MessageEmbed()
+		.setColor('#ffff')
+		.addField(`${message.author.username} wants to play \`True/False Marathon\`.`,
+			`${opponent}, do you accept the game invite?`);
+
+
+	return embed;
+}
+
 // '\u200B'
 
 module.exports.embedTfSingle = embedTfSingle;
+module.exports.embedGameInvite = embedGameInvite;
