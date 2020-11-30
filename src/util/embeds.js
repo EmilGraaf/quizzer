@@ -1,25 +1,48 @@
 const Discord = require('discord.js');
 
-// Format True/False question for singleplayer mode
-function embedTfSingle(item) {
+function embedTf(item, player) {
 	const embed = new Discord.MessageEmbed()
+		.setFooter('❤️'.repeat(player.health), player.client.displayAvatarURL())
 		.setColor('#ffff')
+		// .setTitle(`Score: ${player.score}`)
 		.setDescription(item.category)
-		.addField(item.question, item.correct_answer, true);
+		.addField(item.question, '\u200B', true);
 	return embed;
 }
 
-function embedGameInvite(message, opponent) {
+function embedTfInvite(author, opponent) {
 	const embed = new Discord.MessageEmbed()
 		.setColor('#ffff')
-		.addField(`${message.author.username} wants to play \`True/False Marathon\`.`,
+		.addField(`${author.username} wants to play \`True/False Marathon\`.`,
 			`${opponent}, do you accept the game invite?`);
 
 
 	return embed;
 }
 
-// '\u200B'
+function embedTfCorrect(item, player) {
+	const embed = new Discord.MessageEmbed()
+		.setFooter('❤️'.repeat(player.health), player.client.displayAvatarURL())
+		.setColor('#52AF52')
+		// .setTitle(`Score: ${player.score}`)
+		.setDescription(item.category)
+		.addField(item.question, '\u200B', true);
 
-module.exports.embedTfSingle = embedTfSingle;
-module.exports.embedGameInvite = embedGameInvite;
+	return embed;
+}
+
+function embedTfIncorrect(item, player) {
+	const embed = new Discord.MessageEmbed()
+		.setColor('#FE2E2E')
+		.setFooter('❤️'.repeat(player.health).concat('💔'), player.client.displayAvatarURL())
+		// .setTitle(`Score: ${player.score}`)
+		.setDescription(item.category)
+		.addField(item.question, '\u200B', true);
+
+	return embed;
+}
+
+module.exports.embedTf = embedTf;
+module.exports.embedGameInvite = embedTfInvite;
+module.exports.embedTfCorrect = embedTfCorrect;
+module.exports.embedTfIncorrect = embedTfIncorrect;
