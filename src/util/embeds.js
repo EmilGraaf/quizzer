@@ -10,10 +10,10 @@ function embedTf(item, player) {
 	return embed;
 }
 
-function embedTfInvite(author, opponent) {
+function embedTfInvite(author, opponent, title) {
 	const embed = new Discord.MessageEmbed()
 		.setColor('#ffff')
-		.addField(`${author.username} wants to play \`True/False Marathon\`.`,
+		.addField(`${author.username} wants to play \`${title}\`.`,
 			`${opponent}, do you accept the game invite?`);
 
 
@@ -34,7 +34,7 @@ function embedTfCorrect(item, player) {
 function embedTfIncorrect(item, player) {
 	const embed = new Discord.MessageEmbed()
 		.setColor('#FE2E2E')
-		.setFooter('❤️'.repeat(player.health).concat('💔'), player.client.displayAvatarURL())
+		.setFooter('❤️'.repeat(player.health - 1).concat('💔'), player.client.displayAvatarURL())
 		// .setTitle(`Score: ${player.score}`)
 		.setDescription(item.category)
 		.addField(item.question, '\u200B', true);
