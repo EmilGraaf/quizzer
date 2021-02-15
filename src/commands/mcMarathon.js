@@ -1,18 +1,18 @@
 /**
- * @file Handles functionality for the 'TrueFalse' command, which allows players
- * 	     to compete against eachother in True/False trivia questions.
+ * @file Handles functionality for the 'MultipleChoice' command, which allows players
+ * 	     to compete against eachother in multiple choice trivia questions.
  * @author EmilG <emildegraaf@gmail.com>
  * @see {@link https://github.com/EmilGraaf/quizzer}
  */
 
 const { prefix } = require('../config.json');
-const { TrueFalse } = require('../gamemodes/trueFalse');
+const { MultipleChoice } = require('../gamemodes/multipleChoice');
 
 
 module.exports = {
-	name: 'tf-marathon',
-	description: 'Start a round of True/False Marathon',
-	aliases: ['tf', 'true-false'],
+	name: 'mc-marathon',
+	description: 'Start a round of Multiple Choice Marathon',
+	aliases: ['mc', 'multiple-choice'],
 	args: false,
 	usage: '@[User]',
 	cooldown: 10,
@@ -29,7 +29,7 @@ module.exports = {
  */
 function execute(message, args) {
 
-	const game = new TrueFalse(message.channel, message.author);
+	const game = new MultipleChoice(message.channel, message.author);
 	if (!args.length) {
 		// If no args are supplied, a singleplayer game is launched
 		return game.play();

@@ -1,4 +1,4 @@
-const { embedGameInvite } = require('../util/embeds');
+const { embedInvite } = require('../embeds/miscEmbeds');
 const { Player } = require('../util/player');
 
 class Game {
@@ -25,7 +25,7 @@ class Game {
 			return ['✅', '❌'].includes(reaction.emoji.name) && user.id === opponent.id;
 		};
 
-		const inviteEmbed = embedGameInvite(this.creator, opponent, this.title);
+		const inviteEmbed = embedInvite(this.creator, opponent, this.title);
 
 		const inviteMessage = await this.channel.send(inviteEmbed);
 		await inviteMessage.react('✅');
