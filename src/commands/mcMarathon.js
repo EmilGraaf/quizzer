@@ -1,5 +1,5 @@
 /**
- * @file Handles functionality for the 'MultipleChoice' command, which allows players
+ * @file Handles functionality initiating a game of 'MultipleChoice', which allows players
  * 	     to compete against eachother in multiple choice trivia questions.
  * @author EmilG <emildegraaf@gmail.com>
  * @see {@link https://github.com/EmilGraaf/quizzer}

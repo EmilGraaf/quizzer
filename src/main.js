@@ -1,3 +1,10 @@
+/**
+ * @file The main file responsible for initializing the
+ *       discord client and handling incoming messages.
+ * @author EmilG <emildegraaf@gmail.com>
+ * @see {@link https://github.com/EmilGraaf/quizzer}
+ */
+
 // Import dependencies
 const Discord = require('discord.js');
 const fs = require('fs');
@@ -5,8 +12,11 @@ const { prefix, token } = require('./config.json');
 
 // Initialize client and collections
 const client = new Discord.Client();
+module.exports.client = client;
+
 client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
+const lockedChannels = new Discord.Collection();
 
 // Get command file names and load each command object into collection
 const commandFiles = fs.readdirSync(__dirname + '/commands/').filter(file => file.endsWith('.js'));
@@ -19,6 +29,7 @@ for (const file of commandFiles) {
 // Log console on successful deployment
 client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
+	client.user.setPresence({ activity: { name: `${prefix}quiz` } });
 });
 
 // Listen for incoming messages
@@ -75,13 +86,39 @@ client.on('message', message => {
 	timestamps.set(message.author.id, now);
 	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
-	try {
-		command.execute(message, args);
+	// Prevent users from initiating a game in a channel with an ongoing game
+	if (command.lockChannel) {
+		if (lockedChannels.has(message.channel)) {
+			return message.reply(`a game has already been initiated in this channel by ${lockedChannels.get(message.channel)}`);
+		}
+		else {
+			lockedChannels.set(message.channel, message.author);
+		}
+
+		command.execute(message, args)
+			.then(() => {
+				if (lockedChannels.has(message.channel)) {
+					lockedChannels.delete(message.channel);
+				}
+			})
+			.catch((error) => {
+				if (lockedChannels.has(message.channel)) {
+					lockedChannels.delete(message.channel);
+				}
+				console.error(error);
+				message.reply('there was an error trying to execute that command!');
+			});
 	}
-	catch (error) {
-		console.error(error);
-		message.reply('there was an error trying to execute that command!');
+	else {
+		try {
+			command.execute(message, args);
+		}
+		catch (error) {
+			console.error(error);
+			message.reply('there was an error trying to execute that command!');
+		}
 	}
+
 
 },
 );

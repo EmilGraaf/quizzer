@@ -1,5 +1,5 @@
 /**
- * @file Handles functionality for the 'FreeForAll' command, which allows players
+ * @file Handles functionality for initiating a 'FreeForAll' game, which allows players
  * 	     to compete against eachother in jeopardy-style trivia questions.
  * @author EmilG <emildegraaf@gmail.com>
  * @see {@link https://github.com/EmilGraaf/quizzer}
@@ -14,6 +14,7 @@ module.exports = {
 	description: 'Start a round of Free For All Sprint',
 	aliases: ['ffa', 'sprint'],
 	args: false,
+	usage: '[1-50]',
 	cooldown: 10,
 	guildsOnly: true,
 	lockChannel: true,
@@ -33,6 +34,28 @@ function execute(message, args) {
 
 		return game.play();
 
+	}
+
+	if (args.length !== 1) {
+		let reply = `Invalid argument(s), ${message.author}!`;
+		if (this.usage) {
+			reply += `\nThe proper usage would be: \`${prefix}${this.name} ${this.usage}\``;
+		}
+		return message.channel.send(reply);
+	}
+	else {
+		const rounds = parseInt(args[0]);
+
+		if ((!isNaN(rounds) && rounds >= 1) && rounds <= 50) {
+			return game.play(rounds);
+		}
+		else {
+			let reply = `Invalid argument(s), ${message.author}!`;
+			if (this.usage) {
+				reply += `\nThe proper usage would be: \`${prefix}${this.name} ${this.usage}\``;
+			}
+			return message.channel.send(reply);
+		}
 	}
 
 }

@@ -1,5 +1,5 @@
 /**
- * @file Handles functionality for the 'TrueFalse' command, which allows players
+ * @file Handles functionality for initiating a game of 'TrueFalse', which allows players
  * 	     to compete against eachother in True/False trivia questions.
  * @author EmilG <emildegraaf@gmail.com>
  * @see {@link https://github.com/EmilGraaf/quizzer}

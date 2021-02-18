@@ -1,3 +1,10 @@
+/**
+ * @file Contains the TrueFalse class which handles functionality
+ *       for the 'True False' gamemode.
+ * @author EmilG <emildegraaf@gmail.com>
+ * @see {@link https://github.com/EmilGraaf/quizzer}
+ */
+
 const { Game } = require('./game');
 const { embedTf, embedTfCorrect, embedTfIncorrect } = require('../embeds/tfEmbeds');
 const { getOpenTriviaDB } = require('../util/questions');
@@ -10,6 +17,12 @@ class TrueFalse extends Game {
 
 	}
 
+	/**
+	 * @desc Posts a question and awaits a response.
+	 * @param {Player} player - The user which must respond to the question.
+	 * @param {Integer} timeout - Number of milliseconds users have to respond.
+	 * @returns {Promise<(Boolean)>} - A boolean indicating if the question was answered correctly.
+	 */
 	async postQuestion(player, timeout) {
 
 		if (this.questions.length === 0) {
@@ -61,7 +74,10 @@ class TrueFalse extends Game {
 		}
 	}
 
-
+	/**
+	 * @desc Fetches a number of questions for the game.
+	 * @returns {Promise<(Array<Object>)>} - The array containing the question objects.
+	 */
 	async getQuestions() {
 		const url = 'https://opentdb.com/api.php?amount=20&type=boolean';
 		const newQuestions = await getOpenTriviaDB(url);

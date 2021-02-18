@@ -1,3 +1,10 @@
+/**
+ * @file Contains the Abstract 'Game' class which is implemented
+ *       by several gamemodes.
+ * @author EmilG <emildegraaf@gmail.com>
+ * @see {@link https://github.com/EmilGraaf/quizzer}
+ */
+
 const { embedInvite } = require('../embeds/miscEmbeds');
 const { Player } = require('../util/player');
 
@@ -56,6 +63,11 @@ class Game {
 		throw new Error('Abstract method lacks an implementation.');
 	}
 
+	/**
+	 * @desc Used initially to launch the game.
+	 * @param {User} opponent - The optional second player.
+	 * @returns {Promise<(Message|Array<Message>)>} - Sends a message indicating the result of the game.
+	 */
 	play(opponent) {
 		const player1 = new Player(this.creator);
 		if (opponent === undefined) {

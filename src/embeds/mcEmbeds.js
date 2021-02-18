@@ -1,3 +1,9 @@
+/**
+ * @file Contains the message embeds used in the 'Multiple Choice' gamemode.
+ * @author EmilG <emildegraaf@gmail.com>
+ * @see {@link https://github.com/EmilGraaf/quizzer}
+ */
+
 const Discord = require('discord.js');
 
 const emojiDict = {
@@ -7,6 +13,12 @@ const emojiDict = {
 	3 : '🇩',
 };
 
+/**
+ * @desc Constructs a message embed of the supplied question.
+ * @param {Object} item - The question to be embedded.
+ * @param {Player} player - The user who must answer the question.
+ * @returns {MessageEmbed} - The resulting embed.
+ */
 function embedMc(item, player) {
 	const embed = new Discord.MessageEmbed()
 		.setFooter('❤️'.repeat(player.health), player.client.displayAvatarURL())
@@ -24,6 +36,13 @@ function embedMc(item, player) {
 	return embed;
 }
 
+/**
+ * @desc Constructs a message embed of a question which has been
+ *       answered correctly.
+ * @param {Object} item - The question to be embedded.
+ * @param {Player} player - The user who answered the question.
+ * @returns {MessageEmbed} - The resulting embed.
+ */
 function embedMcCorrect(item, player) {
 	const embed = new Discord.MessageEmbed()
 		.setFooter('❤️'.repeat(player.health), player.client.displayAvatarURL())
@@ -40,6 +59,7 @@ function embedMcCorrect(item, player) {
 		else {
 			embed.addField(`${emojiDict[i]}: ${item.shuffled[i]}`, '\u200B', true);
 		}
+		// Adds whitespace between question 2 & 3
 		if (i == 1) {
 			embed.addField('\u200B', '\u200B', false);
 		}
@@ -47,7 +67,13 @@ function embedMcCorrect(item, player) {
 
 	return embed;
 }
-
+/**
+ * @desc Constructs a message embed of a question which has been
+ *       answered incorrectly.
+ * @param {Object} item - The question to be embedded.
+ * @param {Player} player - The user who answered the question.
+ * @returns {MessageEmbed} - The resulting embed.
+ */
 function embedMcIncorrect(item, player, answer) {
 	const embed = new Discord.MessageEmbed()
 		.setColor('#FE2E2E')
@@ -60,13 +86,14 @@ function embedMcIncorrect(item, player, answer) {
 
 		if (item.shuffled[i] == item.correct_answer) {
 			embed.addField(`✅: ${item.shuffled[i]}`, '\u200B', true);
-		} 
+		}
 		else if (item.shuffled[i] == answer) {
 			embed.addField(`❌: ${item.shuffled[i]}`, '\u200B', true);
 		}
 		else {
 			embed.addField(`${emojiDict[i]}: ${item.shuffled[i]}`, '\u200B', true);
 		}
+		// Adds whitespace between question 2 & 3
 		if (i == 1) {
 			embed.addField('\u200B', '\u200B', false);
 		}

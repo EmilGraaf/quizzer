@@ -1,3 +1,9 @@
+/**
+ * @file Implements the 'help' command, which lists available commands
+ * 		 and their proper usage.
+ * @see {@link https://github.com/EmilGraaf/quizzer}
+ */
+
 const { prefix } = require('../config.json');
 
 module.exports = {
@@ -8,6 +14,12 @@ module.exports = {
 	cooldown: 5,
 	args: false,
 	guildsOnly: false,
+	/**
+	 * @desc This function is called by main to launch the command.
+	 * @param {Message} message - The original message sent to initiate the command.
+	 * @param {Array<String>} args - An array containing any supplied arguments to the command.
+	 * @returns {Promise<(Message|Array<Message>)>} - A message containing a response to the request.
+	 */
 	execute(message, args) {
 		const data = [];
 		const { commands } = message.client;
